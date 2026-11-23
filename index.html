@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML + Python</title>
+</head>
+<body>
+    <h2>Talk to Python</h2>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button onclick="sendToPython()">Send</button>
+    
+    <p id="responseText"></p>
+
+    <script>
+        async function sendToPython() {
+            const name = document.getElementById("nameInput").value;
+
+            // Send the name to the Python '/greet' route
+            const response = await fetch("/greet", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: name })
+            });
+
+            // Get the JSON response back from Python and display it
+            const result = await response.json();
+            document.getElementById("responseText").innerText = result.message;
+        }
+    </script>
+</body>
+</html>
